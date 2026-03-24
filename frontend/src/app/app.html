@@ -1,0 +1,16 @@
+<div class="app-shell">
+  <header class="topbar">
+    <a class="brand" routerLink="/">Trackly</a>
+
+    <nav class="nav">
+      <a routerLink="/" routerLinkActive="is-active" [routerLinkActiveOptions]="{ exact: true }">
+        Dashboard
+      </a>
+      <a routerLink="/add" routerLinkActive="is-active">Add Tracking</a>
+    </nav>
+  </header>
+
+  <main class="content">
+    <router-outlet />
+  </main>
+</div>
