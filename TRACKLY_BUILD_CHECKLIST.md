@@ -143,41 +143,41 @@ Goal: create the skeleton for both apps and verify they boot.
 Goal: define the data model before implementing behavior.
 
 ### Backend Data Design
-- [ ] Create `Carrier` enum or approved constant list
-- [ ] Create `TrackedPackage` model
-- [ ] Create `TrackingEvent` model
-- [ ] Create `CreateTrackingRequestDto`
-- [ ] Create `TrackedPackageSummaryDto`
-- [ ] Create `TrackedPackageDetailsDto`
-- [ ] Create a normalized carrier response model if separate from persistence model
+- [x] Create `Carrier` enum or approved constant list
+- [x] Create `TrackedPackage` model
+- [x] Create `TrackingEvent` model
+- [x] Create `CreateTrackingRequestDto`
+- [x] Create `TrackedPackageSummaryDto`
+- [x] Create `TrackedPackageDetailsDto`
+- [x] Create a normalized carrier response model if separate from persistence model
 
 ### Frontend Data Design
-- [ ] Create `Carrier` type or enum
-- [ ] Create `TrackedPackageSummary` interface
-- [ ] Create `TrackedPackageDetails` interface
-- [ ] Create `TrackingEvent` interface
-- [ ] Create `CreateTrackingRequest` interface
+- [x] Create `Carrier` type or enum
+- [x] Create `TrackedPackageSummary` interface
+- [x] Create `TrackedPackageDetails` interface
+- [x] Create `TrackingEvent` interface
+- [x] Create `CreateTrackingRequest` interface
 
 ### Suggested Minimum Fields
 #### TrackedPackage
-- [ ] `id`
-- [ ] `carrier`
-- [ ] `trackingNumber`
-- [ ] `status`
-- [ ] `estimatedDelivery`
-- [ ] `lastUpdated`
-- [ ] `events`
+- [x] `id`
+- [x] `carrier`
+- [x] `trackingNumber`
+- [x] `status`
+- [x] `estimatedDelivery`
+- [x] `lastUpdated`
+- [x] `events`
 
 #### TrackingEvent
-- [ ] `timestamp`
-- [ ] `location`
-- [ ] `description`
-- [ ] `statusCode`
+- [x] `timestamp`
+- [x] `location`
+- [x] `description`
+- [x] `statusCode`
 
 ### Verification
-- [ ] Swagger models look correct
-- [ ] Frontend service models match backend payloads
-- [ ] No contract ambiguity remains
+- [x] Swagger models look correct
+- [x] Frontend service models match backend payloads
+- [x] No contract ambiguity remains
 
 ### Exit Criteria
 - All core request and response shapes are locked
@@ -366,7 +366,7 @@ Use this section during the build to mark current focus.
 ### Current Phase
 - [x] Phase 0
 - [x] Phase 1
-- [ ] Phase 2
+- [x] Phase 2
 - [ ] Phase 3
 - [ ] Phase 4
 - [ ] Phase 5
@@ -376,7 +376,7 @@ Use this section during the build to mark current focus.
 ### Current Critical Path
 - [x] Backend scaffold
 - [x] Frontend scaffold
-- [ ] Contracts
+- [x] Contracts
 - [ ] CRUD
 - [ ] UI wiring
 - [ ] Refresh
