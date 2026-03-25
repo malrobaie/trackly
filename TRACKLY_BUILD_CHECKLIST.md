@@ -143,41 +143,41 @@ Goal: create the skeleton for both apps and verify they boot.
 Goal: define the data model before implementing behavior.
 
 ### Backend Data Design
-- [ ] Create `Carrier` enum or approved constant list
-- [ ] Create `TrackedPackage` model
-- [ ] Create `TrackingEvent` model
-- [ ] Create `CreateTrackingRequestDto`
-- [ ] Create `TrackedPackageSummaryDto`
-- [ ] Create `TrackedPackageDetailsDto`
-- [ ] Create a normalized carrier response model if separate from persistence model
+- [x] Create `Carrier` enum or approved constant list
+- [x] Create `TrackedPackage` model
+- [x] Create `TrackingEvent` model
+- [x] Create `CreateTrackingRequestDto`
+- [x] Create `TrackedPackageSummaryDto`
+- [x] Create `TrackedPackageDetailsDto`
+- [x] Create a normalized carrier response model if separate from persistence model
 
 ### Frontend Data Design
-- [ ] Create `Carrier` type or enum
-- [ ] Create `TrackedPackageSummary` interface
-- [ ] Create `TrackedPackageDetails` interface
-- [ ] Create `TrackingEvent` interface
-- [ ] Create `CreateTrackingRequest` interface
+- [x] Create `Carrier` type or enum
+- [x] Create `TrackedPackageSummary` interface
+- [x] Create `TrackedPackageDetails` interface
+- [x] Create `TrackingEvent` interface
+- [x] Create `CreateTrackingRequest` interface
 
 ### Suggested Minimum Fields
 #### TrackedPackage
-- [ ] `id`
-- [ ] `carrier`
-- [ ] `trackingNumber`
-- [ ] `status`
-- [ ] `estimatedDelivery`
-- [ ] `lastUpdated`
-- [ ] `events`
+- [x] `id`
+- [x] `carrier`
+- [x] `trackingNumber`
+- [x] `status`
+- [x] `estimatedDelivery`
+- [x] `lastUpdated`
+- [x] `events`
 
 #### TrackingEvent
-- [ ] `timestamp`
-- [ ] `location`
-- [ ] `description`
-- [ ] `statusCode`
+- [x] `timestamp`
+- [x] `location`
+- [x] `description`
+- [x] `statusCode`
 
 ### Verification
-- [ ] Swagger models look correct
-- [ ] Frontend service models match backend payloads
-- [ ] No contract ambiguity remains
+- [x] Swagger models look correct
+- [x] Frontend service models match backend payloads
+- [x] No contract ambiguity remains
 
 ### Exit Criteria
 - All core request and response shapes are locked
@@ -186,35 +186,35 @@ Goal: define the data model before implementing behavior.
 Goal: complete the backend flow before any real carrier dependency.
 
 ### API Endpoints
-- [ ] `POST /api/tracking`
-- [ ] `GET /api/tracking`
-- [ ] `GET /api/tracking/{id}`
-- [ ] `POST /api/tracking/{id}/refresh`
-- [ ] `DELETE /api/tracking/{id}`
+- [x] `POST /api/tracking`
+- [x] `GET /api/tracking`
+- [x] `GET /api/tracking/{id}`
+- [x] `POST /api/tracking/{id}/refresh`
+- [x] `DELETE /api/tracking/{id}`
 
 ### Backend Service Tasks
-- [ ] Create in-memory repository or store
-- [ ] Create tracking service abstraction
-- [ ] Implement create flow
-- [ ] Implement get-all flow
-- [ ] Implement get-by-id flow
-- [ ] Implement delete flow
-- [ ] Implement refresh flow using mock status changes or regenerated sample data
-- [ ] Add validation for carrier and tracking number
-- [ ] Return consistent error responses
+- [x] Create in-memory repository or store
+- [x] Create tracking service abstraction
+- [x] Implement create flow
+- [x] Implement get-all flow
+- [x] Implement get-by-id flow
+- [x] Implement delete flow
+- [x] Implement refresh flow using mock status changes or regenerated sample data
+- [x] Add validation for carrier and tracking number
+- [x] Return consistent error responses
 
 ### Mock Data Rules
-- [ ] Generate believable status text
-- [ ] Generate event history in descending or clearly defined order
-- [ ] Keep normalized shape identical to future live integration
+- [x] Generate believable status text
+- [x] Generate event history in descending or clearly defined order
+- [x] Keep normalized shape identical to future live integration
 
 ### Verification
-- [ ] All endpoints callable in Swagger
-- [ ] Create returns a saved tracked item
-- [ ] Get-all returns collection
-- [ ] Get-by-id returns full details
-- [ ] Refresh updates `lastUpdated`
-- [ ] Delete removes the item
+- [x] All endpoints callable in Swagger
+- [x] Create returns a saved tracked item
+- [x] Get-all returns collection
+- [x] Get-by-id returns full details
+- [x] Refresh updates `lastUpdated`
+- [x] Delete removes the item
 
 ### Exit Criteria
 - Backend is fully usable with mock data only
@@ -223,46 +223,46 @@ Goal: complete the backend flow before any real carrier dependency.
 Goal: make the app usable end to end against the mock backend.
 
 ### App Routing
-- [ ] `/` dashboard route
-- [ ] `/add` add tracking route
-- [ ] `/tracking/:id` details route
+- [x] `/` dashboard route
+- [x] `/add` add tracking route
+- [x] `/tracking/:id` details route
 
 ### Services
-- [ ] Create Angular API service for tracking endpoints
-- [ ] Add environment config for backend base URL
-- [ ] Add request and response typing
-- [ ] Add basic error handling
+- [x] Create Angular API service for tracking endpoints
+- [x] Add environment config for backend base URL
+- [x] Add request and response typing
+- [x] Add basic error handling
 
 ### Dashboard Page
-- [ ] Load tracked packages on init
-- [ ] Show package cards or rows
-- [ ] Show carrier, tracking number, status, and last updated
-- [ ] Add delete action
-- [ ] Add link to details
-- [ ] Add empty state
+- [x] Load tracked packages on init
+- [x] Show package cards or rows
+- [x] Show carrier, tracking number, status, and last updated
+- [x] Add delete action
+- [x] Add link to details
+- [x] Add empty state
 
 ### Add Tracking Page
-- [ ] Build reactive form
-- [ ] Add carrier dropdown
-- [ ] Add tracking number input
-- [ ] Add required validation
-- [ ] Submit to backend
-- [ ] Redirect to dashboard or details on success
-- [ ] Show submission errors
+- [x] Build reactive form
+- [x] Add carrier dropdown
+- [x] Add tracking number input
+- [x] Add required validation
+- [x] Submit to backend
+- [x] Redirect to dashboard or details on success
+- [x] Show submission errors
 
 ### Details Page
-- [ ] Load tracked item by route id
-- [ ] Show package summary
-- [ ] Show event timeline
-- [ ] Add refresh button
-- [ ] Add loading and error states
+- [x] Load tracked item by route id
+- [x] Show package summary
+- [x] Show event timeline
+- [x] Add refresh button
+- [x] Add loading and error states
 
 ### Verification
-- [ ] User can add a package from the UI
-- [ ] New package appears in dashboard
-- [ ] User can open details page
-- [ ] User can delete a package
-- [ ] User can refresh a package from details
+- [x] User can add a package from the UI
+- [x] New package appears in dashboard
+- [x] User can open details page
+- [x] User can delete a package
+- [x] User can refresh a package from details
 
 ### Exit Criteria
 - Full CRUD plus refresh works from the browser
@@ -271,24 +271,24 @@ Goal: make the app usable end to end against the mock backend.
 Goal: swap backend mock generation for a real provider design.
 
 ### Architecture Checkpoints
-- [ ] Create `ITrackingProvider`
-- [ ] Create provider selection strategy by carrier
-- [ ] Create orchestrator service for provider calls
-- [ ] Keep controller contracts unchanged
-- [ ] Keep frontend unchanged except for better loading/error handling
+- [x] Create `ITrackingProvider`
+- [x] Create provider selection strategy by carrier
+- [x] Create orchestrator service for provider calls
+- [x] Keep controller contracts unchanged
+- [x] Keep frontend unchanged except for better loading/error handling
 
 ### First Carrier Implementation
-- [ ] Select first carrier provider
-- [ ] Add provider-specific request building
-- [ ] Add provider-specific response mapping
-- [ ] Normalize response to Trackly model
-- [ ] Handle carrier failure and not-found cases
-- [ ] Decide fallback when live API is unavailable
+- [x] Select first carrier provider
+- [x] Add provider-specific request building
+- [x] Add provider-specific response mapping
+- [x] Normalize response to Trackly model
+- [x] Handle carrier failure and not-found cases
+- [x] Decide fallback when live API is unavailable
 
 ### Verification
-- [ ] First carrier returns normalized data
-- [ ] Existing dashboard/details pages need no contract changes
-- [ ] Refresh still works
+- [x] First carrier returns normalized data
+- [x] Existing dashboard/details pages need no contract changes
+- [x] Refresh still works
 
 ### Exit Criteria
 - One carrier path works through the provider abstraction
@@ -297,25 +297,25 @@ Goal: swap backend mock generation for a real provider design.
 Goal: make the app clear and reliable for demo use.
 
 ### Backend
-- [ ] Improve validation messages
-- [ ] Return proper `404` for missing item
-- [ ] Return proper `400` for invalid request
-- [ ] Handle provider failures cleanly
+- [x] Improve validation messages
+- [x] Return proper `404` for missing item
+- [x] Return proper `400` for invalid request
+- [x] Handle provider failures cleanly
 
 ### Frontend
-- [ ] Disable submit during request
-- [ ] Show form validation messages
-- [ ] Show loading indicators
-- [ ] Show empty states
-- [ ] Show error messages for failed API calls
-- [ ] Add status badges
-- [ ] Improve spacing and visual hierarchy
-- [ ] Make timeline readable
+- [x] Disable submit during request
+- [x] Show form validation messages
+- [x] Show loading indicators
+- [x] Show empty states
+- [x] Show error messages for failed API calls
+- [x] Add status badges
+- [x] Improve spacing and visual hierarchy
+- [x] Make timeline readable
 
 ### Verification
-- [ ] Invalid submissions are clear
-- [ ] Failed API calls do not break the UI
-- [ ] Main screens feel presentable
+- [x] Invalid submissions are clear
+- [x] Failed API calls do not break the UI
+- [x] Main screens feel presentable
 
 ### Exit Criteria
 - App is polished enough for a walkthrough demo
@@ -324,24 +324,24 @@ Goal: make the app clear and reliable for demo use.
 Goal: confirm the project is stable before calling version 1 complete.
 
 ### Backend Checks
-- [ ] Swagger works for every endpoint
-- [ ] Route contracts match frontend expectations
-- [ ] Error responses are consistent
-- [ ] No dead placeholder code remains in the main flow
+- [x] Swagger works for every endpoint
+- [x] Route contracts match frontend expectations
+- [x] Error responses are consistent
+- [x] No dead placeholder code remains in the main flow
 
 ### Frontend Checks
-- [ ] Navigation works between all pages
-- [ ] Dashboard renders correctly with zero, one, and many items
-- [ ] Details page handles missing id or missing package
-- [ ] Form validation works for empty and invalid input
+- [x] Navigation works between all pages
+- [x] Dashboard renders correctly with zero, one, and many items
+- [x] Details page handles missing id or missing package
+- [x] Form validation works for empty and invalid input
 
 ### End-To-End Scenarios
-- [ ] Add package
-- [ ] View dashboard
-- [ ] View details
-- [ ] Refresh details
-- [ ] Delete package
-- [ ] Retry after an API failure
+- [x] Add package
+- [x] View dashboard
+- [x] View details
+- [x] Refresh details
+- [x] Delete package
+- [x] Retry after an API failure
 
 ### Nice-To-Have If Time Remains
 - [ ] Add SQLite persistence
@@ -366,20 +366,20 @@ Use this section during the build to mark current focus.
 ### Current Phase
 - [x] Phase 0
 - [x] Phase 1
-- [ ] Phase 2
-- [ ] Phase 3
-- [ ] Phase 4
-- [ ] Phase 5
-- [ ] Phase 6
-- [ ] Phase 7
+- [x] Phase 2
+- [x] Phase 3
+- [x] Phase 4
+- [x] Phase 5
+- [x] Phase 6
+- [x] Phase 7
 
 ### Current Critical Path
 - [x] Backend scaffold
 - [x] Frontend scaffold
-- [ ] Contracts
-- [ ] CRUD
-- [ ] UI wiring
-- [ ] Refresh
-- [ ] Carrier integration
-- [ ] Polish
-- [ ] Final verification
+- [x] Contracts
+- [x] CRUD
+- [x] UI wiring
+- [x] Refresh
+- [x] Carrier integration
+- [x] Polish
+- [x] Final verification
