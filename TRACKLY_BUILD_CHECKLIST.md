@@ -313,9 +313,9 @@ Goal: make the app clear and reliable for demo use.
 - [x] Make timeline readable
 
 ### Verification
-- [ ] Invalid submissions are clear
-- [ ] Failed API calls do not break the UI
-- [ ] Main screens feel presentable
+- [x] Invalid submissions are clear
+- [x] Failed API calls do not break the UI
+- [x] Main screens feel presentable
 
 ### Exit Criteria
 - App is polished enough for a walkthrough demo
@@ -324,24 +324,24 @@ Goal: make the app clear and reliable for demo use.
 Goal: confirm the project is stable before calling version 1 complete.
 
 ### Backend Checks
-- [ ] Swagger works for every endpoint
-- [ ] Route contracts match frontend expectations
-- [ ] Error responses are consistent
-- [ ] No dead placeholder code remains in the main flow
+- [x] Swagger works for every endpoint
+- [x] Route contracts match frontend expectations
+- [x] Error responses are consistent
+- [x] No dead placeholder code remains in the main flow
 
 ### Frontend Checks
-- [ ] Navigation works between all pages
-- [ ] Dashboard renders correctly with zero, one, and many items
-- [ ] Details page handles missing id or missing package
-- [ ] Form validation works for empty and invalid input
+- [x] Navigation works between all pages
+- [x] Dashboard renders correctly with zero, one, and many items
+- [x] Details page handles missing id or missing package
+- [x] Form validation works for empty and invalid input
 
 ### End-To-End Scenarios
-- [ ] Add package
-- [ ] View dashboard
-- [ ] View details
-- [ ] Refresh details
-- [ ] Delete package
-- [ ] Retry after an API failure
+- [x] Add package
+- [x] View dashboard
+- [x] View details
+- [x] Refresh details
+- [x] Delete package
+- [x] Retry after an API failure
 
 ### Nice-To-Have If Time Remains
 - [ ] Add SQLite persistence
@@ -370,8 +370,8 @@ Use this section during the build to mark current focus.
 - [x] Phase 3
 - [x] Phase 4
 - [x] Phase 5
-- [ ] Phase 6
-- [ ] Phase 7
+- [x] Phase 6
+- [x] Phase 7
 
 ### Current Critical Path
 - [x] Backend scaffold
@@ -381,5 +381,5 @@ Use this section during the build to mark current focus.
 - [x] UI wiring
 - [x] Refresh
 - [x] Carrier integration
-- [ ] Polish
-- [ ] Final verification
+- [x] Polish
+- [x] Final verification
