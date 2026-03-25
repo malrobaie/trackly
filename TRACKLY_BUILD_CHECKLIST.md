@@ -186,35 +186,35 @@ Goal: define the data model before implementing behavior.
 Goal: complete the backend flow before any real carrier dependency.
 
 ### API Endpoints
-- [ ] `POST /api/tracking`
-- [ ] `GET /api/tracking`
-- [ ] `GET /api/tracking/{id}`
-- [ ] `POST /api/tracking/{id}/refresh`
-- [ ] `DELETE /api/tracking/{id}`
+- [x] `POST /api/tracking`
+- [x] `GET /api/tracking`
+- [x] `GET /api/tracking/{id}`
+- [x] `POST /api/tracking/{id}/refresh`
+- [x] `DELETE /api/tracking/{id}`
 
 ### Backend Service Tasks
-- [ ] Create in-memory repository or store
-- [ ] Create tracking service abstraction
-- [ ] Implement create flow
-- [ ] Implement get-all flow
-- [ ] Implement get-by-id flow
-- [ ] Implement delete flow
-- [ ] Implement refresh flow using mock status changes or regenerated sample data
-- [ ] Add validation for carrier and tracking number
-- [ ] Return consistent error responses
+- [x] Create in-memory repository or store
+- [x] Create tracking service abstraction
+- [x] Implement create flow
+- [x] Implement get-all flow
+- [x] Implement get-by-id flow
+- [x] Implement delete flow
+- [x] Implement refresh flow using mock status changes or regenerated sample data
+- [x] Add validation for carrier and tracking number
+- [x] Return consistent error responses
 
 ### Mock Data Rules
-- [ ] Generate believable status text
-- [ ] Generate event history in descending or clearly defined order
-- [ ] Keep normalized shape identical to future live integration
+- [x] Generate believable status text
+- [x] Generate event history in descending or clearly defined order
+- [x] Keep normalized shape identical to future live integration
 
 ### Verification
-- [ ] All endpoints callable in Swagger
-- [ ] Create returns a saved tracked item
-- [ ] Get-all returns collection
-- [ ] Get-by-id returns full details
-- [ ] Refresh updates `lastUpdated`
-- [ ] Delete removes the item
+- [x] All endpoints callable in Swagger
+- [x] Create returns a saved tracked item
+- [x] Get-all returns collection
+- [x] Get-by-id returns full details
+- [x] Refresh updates `lastUpdated`
+- [x] Delete removes the item
 
 ### Exit Criteria
 - Backend is fully usable with mock data only
@@ -367,7 +367,7 @@ Use this section during the build to mark current focus.
 - [x] Phase 0
 - [x] Phase 1
 - [x] Phase 2
-- [ ] Phase 3
+- [x] Phase 3
 - [ ] Phase 4
 - [ ] Phase 5
 - [ ] Phase 6
@@ -377,7 +377,7 @@ Use this section during the build to mark current focus.
 - [x] Backend scaffold
 - [x] Frontend scaffold
 - [x] Contracts
-- [ ] CRUD
+- [x] CRUD
 - [ ] UI wiring
 - [ ] Refresh
 - [ ] Carrier integration

@@ -1,5 +1,60 @@
-<section class="panel">
-  <p class="eyebrow">Route check</p>
-  <h1>Tracking details placeholder</h1>
-  <p>Current route id: <strong>{{ trackingId }}</strong></p>
-</section>
+@if (errorMessage()) {
+  <p class="banner error">{{ errorMessage() }}</p>
+}
+
+@if (isLoading()) {
+  <section class="panel">
+    <p>Loading tracking details...</p>
+  </section>
+} @else if (packageDetails(); as details) {
+  <section class="panel summary">
+    <div class="summary-header">
+      <div>
+        <p class="eyebrow">{{ details.carrier }}</p>
+        <h1>{{ details.trackingNumber }}</h1>
+        <p class="status">{{ details.status }}</p>
+      </div>
+
+      <div class="summary-actions">
+        <button type="button" (click)="refresh()" [disabled]="isRefreshing() || isDeleting()">
+          {{ isRefreshing() ? 'Refreshing...' : 'Refresh' }}
+        </button>
+        <button type="button" class="danger" (click)="deletePackage()" [disabled]="isDeleting() || isRefreshing()">
+          {{ isDeleting() ? 'Deleting...' : 'Delete' }}
+        </button>
+      </div>
+    </div>
+
+    <dl class="meta">
+      <div>
+        <dt>Estimated delivery</dt>
+        <dd>{{ details.estimatedDelivery ? (details.estimatedDelivery | date: 'mediumDate') : 'Pending' }}</dd>
+      </div>
+
+      <div>
+        <dt>Last updated</dt>
+        <dd>{{ details.lastUpdated | date: 'medium' }}</dd>
+      </div>
+    </dl>
+  </section>
+
+  <section class="panel timeline">
+    <div class="timeline-header">
+      <h2>Tracking history</h2>
+      <a routerLink="/">Back to dashboard</a>
+    </div>
+
+    <div class="events">
+      @for (event of details.events; track event.timestamp + event.description) {
+        <article class="event">
+          <p class="event-time">{{ event.timestamp | date: 'medium' }}</p>
+          <h3>{{ event.description }}</h3>
+          <p class="event-location">{{ event.location }}</p>
+          @if (event.statusCode) {
+            <p class="event-code">{{ event.statusCode }}</p>
+          }
+        </article>
+      }
+    </div>
+  </section>
+}

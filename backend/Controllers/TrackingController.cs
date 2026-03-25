@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Trackly.Api.DTOs;
+using Trackly.Api.Interfaces;
 
 namespace Trackly.Api.Controllers;
 
@@ -7,54 +8,87 @@ namespace Trackly.Api.Controllers;
 [Route("api/[controller]")]
 public sealed class TrackingController : ControllerBase
 {
+    private readonly ITrackingService trackingService;
+
+    public TrackingController(ITrackingService trackingService)
+    {
+        this.trackingService = trackingService;
+    }
+
     [HttpPost]
     [ProducesResponseType(typeof(TrackedPackageDetailsDto), StatusCodes.Status201Created)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ErrorResponseDto), StatusCodes.Status400BadRequest)]
     public ActionResult<TrackedPackageDetailsDto> Create(CreateTrackingRequestDto request)
     {
-        return StatusCode(StatusCodes.Status501NotImplemented, new
+        if (string.IsNullOrWhiteSpace(request.TrackingNumber))
         {
-            message = "Phase 3 will implement create tracking."
-        });
+            return BadRequest(new ErrorResponseDto
+            {
+                Message = "Tracking number is required."
+            });
+        }
+
+        var trackedPackage = trackingService.Create(request);
+
+        return CreatedAtAction(nameof(GetById), new { id = trackedPackage.Id }, trackedPackage);
     }
 
     [HttpGet]
     [ProducesResponseType(typeof(List<TrackedPackageSummaryDto>), StatusCodes.Status200OK)]
     public ActionResult<IReadOnlyList<TrackedPackageSummaryDto>> GetAll()
     {
-        return Ok(Array.Empty<TrackedPackageSummaryDto>());
+        return Ok(trackingService.GetAll());
     }
 
     [HttpGet("{id:guid}")]
     [ProducesResponseType(typeof(TrackedPackageDetailsDto), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ErrorResponseDto), StatusCodes.Status404NotFound)]
     public ActionResult<TrackedPackageDetailsDto> GetById(Guid id)
     {
-        return StatusCode(StatusCodes.Status501NotImplemented, new
+        var trackedPackage = trackingService.GetById(id);
+
+        if (trackedPackage is null)
         {
-            message = $"Phase 3 will implement lookup for package {id}."
-        });
+            return NotFound(new ErrorResponseDto
+            {
+                Message = $"Tracked package {id} was not found."
+            });
+        }
+
+        return Ok(trackedPackage);
     }
 
     [HttpPost("{id:guid}/refresh")]
     [ProducesResponseType(typeof(TrackedPackageDetailsDto), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ErrorResponseDto), StatusCodes.Status404NotFound)]
     public ActionResult<TrackedPackageDetailsDto> Refresh(Guid id)
     {
-        return StatusCode(StatusCodes.Status501NotImplemented, new
+        var trackedPackage = trackingService.Refresh(id);
+
+        if (trackedPackage is null)
         {
-            message = $"Phase 5 will implement refresh for package {id}."
-        });
+            return NotFound(new ErrorResponseDto
+            {
+                Message = $"Tracked package {id} was not found."
+            });
+        }
+
+        return Ok(trackedPackage);
     }
 
     [HttpDelete("{id:guid}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ErrorResponseDto), StatusCodes.Status404NotFound)]
     public IActionResult Delete(Guid id)
     {
-        return StatusCode(StatusCodes.Status501NotImplemented, new
+        if (!trackingService.Delete(id))
         {
-            message = $"Phase 3 will implement delete for package {id}."
-        });
+            return NotFound(new ErrorResponseDto
+            {
+                Message = $"Tracked package {id} was not found."
+            });
+        }
+
+        return NoContent();
     }
 }

@@ -1,7 +1,37 @@
 <section class="panel">
-  <p class="eyebrow">Next</p>
-  <h1>Add Tracking placeholder</h1>
-  <p>
-    Phase 4 will replace this with the reactive form for carrier selection and tracking number submission.
+  <p class="eyebrow">Add tracking</p>
+  <h1>Save a package to your dashboard.</h1>
+  <p class="intro">
+    Pick a carrier, paste the tracking number, and Trackly will create the first record using the backend mock flow.
   </p>
+
+  @if (errorMessage()) {
+    <p class="banner error">{{ errorMessage() }}</p>
+  }
+
+  <form [formGroup]="form" (ngSubmit)="submit()" class="form">
+    <label class="field">
+      <span>Carrier</span>
+      <select formControlName="carrier">
+        @for (carrier of carrierOptions; track carrier) {
+          <option [value]="carrier">{{ carrier }}</option>
+        }
+      </select>
+    </label>
+
+    <label class="field">
+      <span>Tracking number</span>
+      <input formControlName="trackingNumber" type="text" placeholder="9400111899223856921487" />
+      @if (form.controls.trackingNumber.touched && form.controls.trackingNumber.invalid) {
+        <small class="validation">Enter a tracking number between 6 and 64 characters.</small>
+      }
+    </label>
+
+    <div class="actions">
+      <button type="submit" [disabled]="isSubmitting()">
+        {{ isSubmitting() ? 'Saving...' : 'Save tracking' }}
+      </button>
+      <a routerLink="/">Back to dashboard</a>
+    </div>
+  </form>
 </section>

@@ -2,6 +2,8 @@ using System.Text.Json.Serialization;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 using Trackly.Api.Enums;
+using Trackly.Api.Interfaces;
+using Trackly.Api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,6 +33,7 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 builder.Services.AddHttpClient();
+builder.Services.AddSingleton<ITrackingService, InMemoryTrackingService>();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(CorsPolicyName, policy =>

@@ -9,6 +9,7 @@ public sealed class CreateTrackingRequestDto
     public Carrier Carrier { get; set; }
 
     [Required]
+    [MinLength(6)]
     [MaxLength(64)]
     public string TrackingNumber { get; set; } = string.Empty;
 }

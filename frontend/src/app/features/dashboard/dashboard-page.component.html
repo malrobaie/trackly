@@ -1,7 +1,61 @@
-<section class="panel hero">
-  <p class="eyebrow">Phase 1</p>
-  <h1>Dashboard placeholder is wired.</h1>
-  <p>
-    This route will become the tracked packages dashboard once the API contract and CRUD flow are in place.
-  </p>
+<section class="hero">
+  <div>
+    <p class="eyebrow">Trackly dashboard</p>
+    <h1>Tracked packages in one place.</h1>
+    <p class="intro">
+      Add a shipment, check its current status, and open the full event history without leaving the app.
+    </p>
+  </div>
+
+  <a class="primary-link" routerLink="/add">Add tracking</a>
 </section>
+
+@if (errorMessage()) {
+  <p class="banner error">{{ errorMessage() }}</p>
+}
+
+@if (isLoading()) {
+  <section class="panel state-panel">
+    <p>Loading tracked packages...</p>
+  </section>
+} @else if (packages().length === 0) {
+  <section class="panel state-panel">
+    <h2>No tracked packages yet.</h2>
+    <p>Add your first tracking number to start building the dashboard.</p>
+    <a class="secondary-link" routerLink="/add">Go to add tracking</a>
+  </section>
+} @else {
+  <section class="cards">
+    @for (packageItem of packages(); track trackById($index, packageItem)) {
+      <article class="panel card">
+        <div class="card-header">
+          <div>
+            <p class="carrier">{{ packageItem.carrier }}</p>
+            <h2>{{ packageItem.trackingNumber }}</h2>
+          </div>
+
+          <span class="status-badge">{{ packageItem.status }}</span>
+        </div>
+
+        <dl class="meta">
+          <div>
+            <dt>Last updated</dt>
+            <dd>{{ packageItem.lastUpdated | date: 'medium' }}</dd>
+          </div>
+
+          <div>
+            <dt>Estimated delivery</dt>
+            <dd>{{ packageItem.estimatedDelivery ? (packageItem.estimatedDelivery | date: 'mediumDate') : 'Pending' }}</dd>
+          </div>
+        </dl>
+
+        <div class="actions">
+          <a class="secondary-link" [routerLink]="['/tracking', packageItem.id]">View details</a>
+          <button type="button" (click)="deletePackage(packageItem.id)" [disabled]="deletingId() === packageItem.id">
+            {{ deletingId() === packageItem.id ? 'Deleting...' : 'Delete' }}
+          </button>
+        </div>
+      </article>
+    }
+  </section>
+}
