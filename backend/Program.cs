@@ -6,6 +6,7 @@ using Trackly.Api.Enums;
 using Trackly.Api.Interfaces;
 using Trackly.Api.Services;
 using Trackly.Api.DTOs;
+using Trackly.Api.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -51,8 +52,12 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 builder.Services.AddHttpClient();
+builder.Services.Configure<UspsApiOptions>(builder.Configuration.GetSection(UspsApiOptions.SectionName));
 builder.Services.AddSingleton<ITrackingProvider, UspsTrackingProvider>();
 builder.Services.AddSingleton<ITrackingProvider, UpsTrackingProvider>();
+builder.Services.AddSingleton<ITrackingProvider, FedExTrackingProvider>();
+builder.Services.AddSingleton<ITrackingProvider, DhlTrackingProvider>();
+builder.Services.AddSingleton<ITrackingProvider, OnTracTrackingProvider>();
 builder.Services.AddSingleton<ITrackingOrchestratorService, TrackingOrchestratorService>();
 builder.Services.AddSingleton<ITrackingService, InMemoryTrackingService>();
 builder.Services.AddCors(options =>

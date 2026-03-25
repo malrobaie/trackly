@@ -18,7 +18,13 @@ export class AddTrackingPageComponent {
   private readonly trackingApi = inject(TrackingApiService);
   private readonly router = inject(Router);
 
-  protected readonly carrierOptions = [Carrier.Usps, Carrier.Ups];
+  protected readonly carrierOptions = [
+    Carrier.Usps,
+    Carrier.Ups,
+    Carrier.FedEx,
+    Carrier.Dhl,
+    Carrier.OnTrac
+  ];
   protected readonly isSubmitting = signal(false);
   protected readonly errorMessage = signal('');
 

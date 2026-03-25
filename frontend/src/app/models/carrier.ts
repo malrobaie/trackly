@@ -1,4 +1,7 @@
 export enum Carrier {
   Usps = 'Usps',
-  Ups = 'Ups'
+  Ups = 'Ups',
+  FedEx = 'FedEx',
+  Dhl = 'Dhl',
+  OnTrac = 'OnTrac'
 }

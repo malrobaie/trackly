@@ -81,23 +81,134 @@ Goal: lock the decisions that affect all later layers.
 - Provider abstraction lets us upgrade to live carrier integration without rewriting the frontend contract
 - Delaying authentication keeps today's scope realistic, but calling it out now prevents us from designing the app as permanently anonymous
 
-## Future Phase: Authentication And User Ownership
-Goal: define the layer that turns Trackly from a local demo into a real user-based app.
+## Phase 8: Live USPS Integration
+Goal: replace the current USPS mock path with a verified live USPS API flow and keep the existing UI contract stable.
 
-### Required Capabilities
-- [ ] Add login and logout flow
-- [ ] Add user identity model
-- [ ] Link tracked packages to a user id
-- [ ] Restrict `GET /api/tracking` to the signed-in user's packages only
-- [ ] Restrict `GET /api/tracking/{id}` to owned packages only
-- [ ] Restrict refresh and delete actions to owned packages only
-- [ ] Add frontend auth state and route protection
-- [ ] Add persistent storage for users and tracked packages
+### Step 1: USPS Developer Access
+- [ ] Create or confirm USPS developer portal access
+- [ ] Register the Trackly app in the USPS developer portal
+- [ ] Confirm the app has access to the tracking product
+- [ ] Obtain the USPS consumer key and consumer secret
+- [ ] Confirm whether USPS also requires CRID and MID for your account setup
 
-### Architecture Notes
-- Controllers and services should avoid assuming global anonymous access forever
-- Tracking records should be designed so a `userId` can be added cleanly
-- Frontend service design should allow authenticated API calls later
+### Step 2: Local Configuration
+- [x] Set `UspsApi__ClientId`
+- [x] Set `UspsApi__ClientSecret`
+- [x] Decide whether to use production or USPS test environment
+- [x] Verify config is loaded without hardcoding secrets in source control
+
+### Step 3: OAuth Token Flow
+- [x] Request a USPS OAuth token from `https://apis.usps.com/oauth2/v3/token`
+- [x] Cache the access token in the backend
+- [x] Refresh the token before expiration
+- [x] Return a clean `503` if token acquisition fails
+
+### Step 4: USPS Tracking Request
+- [x] Send a live request to the USPS tracking endpoint for a real tracking number
+- [x] Log the raw USPS response shape during development
+- [ ] Confirm the actual response fields used for status, timestamps, and location data
+
+### Step 5: Response Mapping
+- [x] Map the live USPS response into `CarrierTrackingSnapshotDto`
+- [x] Normalize live USPS statuses into Trackly-friendly values
+- [x] Normalize tracking events into the existing event DTO shape
+- [x] Keep frontend contracts unchanged
+
+### Step 6: Error Handling
+- [x] Handle invalid tracking numbers
+- [x] Handle USPS auth failures
+- [x] Handle USPS rate limits or temporary outages
+- [x] Return clean error messages without exposing secrets
+- [x] Fall back to mock USPS data when live credentials are not ready
+
+### Step 7: Verification
+- [x] Create a tracked USPS package through the app
+- [ ] Verify the dashboard shows live USPS status
+- [ ] Verify the details page shows live USPS tracking events
+- [ ] Verify refresh pulls updated live USPS data
+- [x] Verify non-USPS carriers still work through the mock fallback
+- [x] Verify USPS still works through mock fallback when credentials are missing
+
+### Exit Criteria
+- USPS requests are live when credentials are configured
+- USPS falls back cleanly to mock data when credentials are unavailable
+- USPS responses are normalized cleanly
+- Existing frontend flow still works without contract changes
+
+## Phase 9: User Login And Owned Tracking
+Goal: add real user login so tracked packages belong to a user and only that user can view or manage them.
+
+### Step 1: Auth Decision
+- [ ] Choose auth provider approach
+- [ ] Decide whether to use ASP.NET Identity, Clerk, Auth0, Firebase Auth, or another provider
+- [ ] Decide whether Angular will use cookie auth or bearer token auth
+- [ ] Confirm the minimal version 1 auth scope
+
+### Step 2: Data Model Changes
+- [ ] Add a user model or user identity integration
+- [ ] Add `userId` ownership to tracked packages
+- [ ] Replace in-memory-only assumptions where needed
+- [ ] Decide whether to move to SQLite for persistence before auth lands
+
+### Step 3: Backend Auth Plumbing
+- [ ] Configure authentication middleware
+- [ ] Configure authorization middleware
+- [ ] Add a current-user accessor in the backend
+- [ ] Make tracking service operations user-aware
+
+### Step 4: Protect Tracking Endpoints
+- [ ] Require authentication for tracking endpoints
+- [ ] Filter `GET /api/tracking` by current user
+- [ ] Restrict `GET /api/tracking/{id}` by ownership
+- [ ] Restrict refresh by ownership
+- [ ] Restrict delete by ownership
+- [ ] Restrict create so new tracked items are saved to the current user
+
+### Step 5: Frontend Auth Flow
+- [ ] Add login page or redirect flow
+- [ ] Add logout action
+- [ ] Store auth state safely
+- [ ] Protect tracking routes from anonymous access
+- [ ] Show signed-in versus signed-out UI states
+
+### Step 6: Frontend User-Aware Tracking Flow
+- [ ] Prevent anonymous users from adding tracking items
+- [ ] Load only the signed-in user's packages on dashboard
+- [ ] Preserve details, refresh, and delete flow for owned packages only
+- [ ] Show a clear message when the session expires
+
+### Step 7: Verification
+- [ ] User A can add and view their tracked packages
+- [ ] User B cannot view User A packages
+- [ ] Anonymous users cannot access tracking pages
+- [ ] Login and logout work cleanly
+- [ ] Refresh and delete remain restricted to the owner
+
+### Exit Criteria
+- Users must log in to view tracked items
+- Tracked packages are owned by a user
+- Anonymous global access is removed from the main tracking flow
+
+## What Is Complete Now
+- [x] Local Trackly v1 demo is complete
+- [x] Backend CRUD works with normalized tracking data
+- [x] Frontend flow works end to end
+- [x] Provider abstraction is in place
+- [x] USPS provider supports live integration and mock fallback
+- [x] The app is usable today without waiting for USPS credentials
+
+## What We Can Do Next
+### Immediate Next Work
+- [ ] Finish live USPS verification once developer credentials are available
+- [ ] Confirm the real USPS payload mapping against live tracking responses
+- [ ] Decide auth approach for login and owned tracking
+- [ ] Decide whether to add SQLite before or during auth work
+
+### After That
+- [ ] Implement login flow
+- [ ] Make tracked packages user-owned
+- [ ] Restrict tracking endpoints by signed-in user
+- [ ] Add persistent storage for users and packages
 
 ## Phase 1: Repository Setup
 Goal: create the skeleton for both apps and verify they boot.
@@ -372,6 +483,8 @@ Use this section during the build to mark current focus.
 - [x] Phase 5
 - [x] Phase 6
 - [x] Phase 7
+- [ ] Phase 8
+- [ ] Phase 9
 
 ### Current Critical Path
 - [x] Backend scaffold
@@ -383,3 +496,11 @@ Use this section during the build to mark current focus.
 - [x] Carrier integration
 - [x] Polish
 - [x] Final verification
+- [ ] Live USPS verification
+- [ ] Auth and ownership
+
+## Recommended Next Order
+1. Finish Phase 8 with real USPS credentials
+2. Confirm live USPS mapping with real tracking numbers
+3. Decide auth provider and persistence path
+4. Complete Phase 9 login and per-user tracking
