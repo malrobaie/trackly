@@ -16,6 +16,7 @@
 
 @if (isLoading()) {
   <section class="panel state-panel">
+    <div class="loader"></div>
     <p>Loading tracked packages...</p>
   </section>
 } @else if (packages().length === 0) {
@@ -34,7 +35,7 @@
             <h2>{{ packageItem.trackingNumber }}</h2>
           </div>
 
-          <span class="status-badge">{{ packageItem.status }}</span>
+          <span class="status-badge" [class]=" 'status-badge ' + statusClass(packageItem.status)">{{ packageItem.status }}</span>
         </div>
 
         <dl class="meta">

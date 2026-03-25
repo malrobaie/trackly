@@ -1,9 +1,13 @@
 @if (errorMessage()) {
-  <p class="banner error">{{ errorMessage() }}</p>
+  <section class="panel error-panel">
+    <p class="banner error">{{ errorMessage() }}</p>
+    <a routerLink="/">Back to dashboard</a>
+  </section>
 }
 
 @if (isLoading()) {
   <section class="panel">
+    <div class="loader"></div>
     <p>Loading tracking details...</p>
   </section>
 } @else if (packageDetails(); as details) {
@@ -12,12 +16,12 @@
       <div>
         <p class="eyebrow">{{ details.carrier }}</p>
         <h1>{{ details.trackingNumber }}</h1>
-        <p class="status">{{ details.status }}</p>
+        <p class="status" [class]=" 'status ' + statusClass(details.status)">{{ details.status }}</p>
       </div>
 
       <div class="summary-actions">
         <button type="button" (click)="refresh()" [disabled]="isRefreshing() || isDeleting()">
-          {{ isRefreshing() ? 'Refreshing...' : 'Refresh' }}
+          {{ isRefreshing() ? 'Refreshing...' : 'Refresh status' }}
         </button>
         <button type="button" class="danger" (click)="deletePackage()" [disabled]="isDeleting() || isRefreshing()">
           {{ isDeleting() ? 'Deleting...' : 'Delete' }}

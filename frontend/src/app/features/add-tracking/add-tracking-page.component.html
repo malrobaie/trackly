@@ -12,7 +12,7 @@
   <form [formGroup]="form" (ngSubmit)="submit()" class="form">
     <label class="field">
       <span>Carrier</span>
-      <select formControlName="carrier">
+      <select formControlName="carrier" [disabled]="isSubmitting()">
         @for (carrier of carrierOptions; track carrier) {
           <option [value]="carrier">{{ carrier }}</option>
         }
@@ -21,9 +21,15 @@
 
     <label class="field">
       <span>Tracking number</span>
-      <input formControlName="trackingNumber" type="text" placeholder="9400111899223856921487" />
+      <input formControlName="trackingNumber" type="text" placeholder="9400111899223856921487" [disabled]="isSubmitting()" />
       @if (form.controls.trackingNumber.touched && form.controls.trackingNumber.invalid) {
-        <small class="validation">Enter a tracking number between 6 and 64 characters.</small>
+        <small class="validation">
+          @if (form.controls.trackingNumber.hasError('required')) {
+            Tracking number is required.
+          } @else {
+            Enter a tracking number between 6 and 64 characters.
+          }
+        </small>
       }
     </label>
 

@@ -44,6 +44,10 @@ export class DashboardPageComponent implements OnInit {
     return packageItem.id;
   }
 
+  protected statusClass(status: string): string {
+    return `status-${status.toLowerCase().replaceAll(' ', '-')}`;
+  }
+
   private loadPackages(): void {
     this.isLoading.set(true);
     this.errorMessage.set('');

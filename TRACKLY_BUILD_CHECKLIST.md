@@ -223,46 +223,46 @@ Goal: complete the backend flow before any real carrier dependency.
 Goal: make the app usable end to end against the mock backend.
 
 ### App Routing
-- [ ] `/` dashboard route
-- [ ] `/add` add tracking route
-- [ ] `/tracking/:id` details route
+- [x] `/` dashboard route
+- [x] `/add` add tracking route
+- [x] `/tracking/:id` details route
 
 ### Services
-- [ ] Create Angular API service for tracking endpoints
-- [ ] Add environment config for backend base URL
-- [ ] Add request and response typing
-- [ ] Add basic error handling
+- [x] Create Angular API service for tracking endpoints
+- [x] Add environment config for backend base URL
+- [x] Add request and response typing
+- [x] Add basic error handling
 
 ### Dashboard Page
-- [ ] Load tracked packages on init
-- [ ] Show package cards or rows
-- [ ] Show carrier, tracking number, status, and last updated
-- [ ] Add delete action
-- [ ] Add link to details
-- [ ] Add empty state
+- [x] Load tracked packages on init
+- [x] Show package cards or rows
+- [x] Show carrier, tracking number, status, and last updated
+- [x] Add delete action
+- [x] Add link to details
+- [x] Add empty state
 
 ### Add Tracking Page
-- [ ] Build reactive form
-- [ ] Add carrier dropdown
-- [ ] Add tracking number input
-- [ ] Add required validation
-- [ ] Submit to backend
-- [ ] Redirect to dashboard or details on success
-- [ ] Show submission errors
+- [x] Build reactive form
+- [x] Add carrier dropdown
+- [x] Add tracking number input
+- [x] Add required validation
+- [x] Submit to backend
+- [x] Redirect to dashboard or details on success
+- [x] Show submission errors
 
 ### Details Page
-- [ ] Load tracked item by route id
-- [ ] Show package summary
-- [ ] Show event timeline
-- [ ] Add refresh button
-- [ ] Add loading and error states
+- [x] Load tracked item by route id
+- [x] Show package summary
+- [x] Show event timeline
+- [x] Add refresh button
+- [x] Add loading and error states
 
 ### Verification
-- [ ] User can add a package from the UI
-- [ ] New package appears in dashboard
-- [ ] User can open details page
-- [ ] User can delete a package
-- [ ] User can refresh a package from details
+- [x] User can add a package from the UI
+- [x] New package appears in dashboard
+- [x] User can open details page
+- [x] User can delete a package
+- [x] User can refresh a package from details
 
 ### Exit Criteria
 - Full CRUD plus refresh works from the browser
@@ -271,24 +271,24 @@ Goal: make the app usable end to end against the mock backend.
 Goal: swap backend mock generation for a real provider design.
 
 ### Architecture Checkpoints
-- [ ] Create `ITrackingProvider`
-- [ ] Create provider selection strategy by carrier
-- [ ] Create orchestrator service for provider calls
-- [ ] Keep controller contracts unchanged
-- [ ] Keep frontend unchanged except for better loading/error handling
+- [x] Create `ITrackingProvider`
+- [x] Create provider selection strategy by carrier
+- [x] Create orchestrator service for provider calls
+- [x] Keep controller contracts unchanged
+- [x] Keep frontend unchanged except for better loading/error handling
 
 ### First Carrier Implementation
-- [ ] Select first carrier provider
-- [ ] Add provider-specific request building
-- [ ] Add provider-specific response mapping
-- [ ] Normalize response to Trackly model
-- [ ] Handle carrier failure and not-found cases
-- [ ] Decide fallback when live API is unavailable
+- [x] Select first carrier provider
+- [x] Add provider-specific request building
+- [x] Add provider-specific response mapping
+- [x] Normalize response to Trackly model
+- [x] Handle carrier failure and not-found cases
+- [x] Decide fallback when live API is unavailable
 
 ### Verification
-- [ ] First carrier returns normalized data
-- [ ] Existing dashboard/details pages need no contract changes
-- [ ] Refresh still works
+- [x] First carrier returns normalized data
+- [x] Existing dashboard/details pages need no contract changes
+- [x] Refresh still works
 
 ### Exit Criteria
 - One carrier path works through the provider abstraction
@@ -297,20 +297,20 @@ Goal: swap backend mock generation for a real provider design.
 Goal: make the app clear and reliable for demo use.
 
 ### Backend
-- [ ] Improve validation messages
-- [ ] Return proper `404` for missing item
-- [ ] Return proper `400` for invalid request
-- [ ] Handle provider failures cleanly
+- [x] Improve validation messages
+- [x] Return proper `404` for missing item
+- [x] Return proper `400` for invalid request
+- [x] Handle provider failures cleanly
 
 ### Frontend
-- [ ] Disable submit during request
-- [ ] Show form validation messages
-- [ ] Show loading indicators
-- [ ] Show empty states
-- [ ] Show error messages for failed API calls
-- [ ] Add status badges
-- [ ] Improve spacing and visual hierarchy
-- [ ] Make timeline readable
+- [x] Disable submit during request
+- [x] Show form validation messages
+- [x] Show loading indicators
+- [x] Show empty states
+- [x] Show error messages for failed API calls
+- [x] Add status badges
+- [x] Improve spacing and visual hierarchy
+- [x] Make timeline readable
 
 ### Verification
 - [ ] Invalid submissions are clear
@@ -368,8 +368,8 @@ Use this section during the build to mark current focus.
 - [x] Phase 1
 - [x] Phase 2
 - [x] Phase 3
-- [ ] Phase 4
-- [ ] Phase 5
+- [x] Phase 4
+- [x] Phase 5
 - [ ] Phase 6
 - [ ] Phase 7
 
@@ -378,8 +378,8 @@ Use this section during the build to mark current focus.
 - [x] Frontend scaffold
 - [x] Contracts
 - [x] CRUD
-- [ ] UI wiring
-- [ ] Refresh
-- [ ] Carrier integration
+- [x] UI wiring
+- [x] Refresh
+- [x] Carrier integration
 - [ ] Polish
 - [ ] Final verification

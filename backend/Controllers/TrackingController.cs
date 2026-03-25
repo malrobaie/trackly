@@ -18,6 +18,7 @@ public sealed class TrackingController : ControllerBase
     [HttpPost]
     [ProducesResponseType(typeof(TrackedPackageDetailsDto), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ErrorResponseDto), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ErrorResponseDto), StatusCodes.Status503ServiceUnavailable)]
     public ActionResult<TrackedPackageDetailsDto> Create(CreateTrackingRequestDto request)
     {
         if (string.IsNullOrWhiteSpace(request.TrackingNumber))
@@ -28,9 +29,19 @@ public sealed class TrackingController : ControllerBase
             });
         }
 
-        var trackedPackage = trackingService.Create(request);
+        try
+        {
+            var trackedPackage = trackingService.Create(request);
 
-        return CreatedAtAction(nameof(GetById), new { id = trackedPackage.Id }, trackedPackage);
+            return CreatedAtAction(nameof(GetById), new { id = trackedPackage.Id }, trackedPackage);
+        }
+        catch (InvalidOperationException exception)
+        {
+            return StatusCode(StatusCodes.Status503ServiceUnavailable, new ErrorResponseDto
+            {
+                Message = exception.Message
+            });
+        }
     }
 
     [HttpGet]
@@ -61,9 +72,22 @@ public sealed class TrackingController : ControllerBase
     [HttpPost("{id:guid}/refresh")]
     [ProducesResponseType(typeof(TrackedPackageDetailsDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponseDto), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ErrorResponseDto), StatusCodes.Status503ServiceUnavailable)]
     public ActionResult<TrackedPackageDetailsDto> Refresh(Guid id)
     {
-        var trackedPackage = trackingService.Refresh(id);
+        TrackedPackageDetailsDto? trackedPackage;
+
+        try
+        {
+            trackedPackage = trackingService.Refresh(id);
+        }
+        catch (InvalidOperationException exception)
+        {
+            return StatusCode(StatusCodes.Status503ServiceUnavailable, new ErrorResponseDto
+            {
+                Message = exception.Message
+            });
+        }
 
         if (trackedPackage is null)
         {

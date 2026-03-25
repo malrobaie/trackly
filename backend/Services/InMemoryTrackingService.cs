@@ -1,6 +1,5 @@
 using System.Collections.Concurrent;
 using Trackly.Api.DTOs;
-using Trackly.Api.Enums;
 using Trackly.Api.Interfaces;
 using Trackly.Api.Models;
 
@@ -18,11 +17,18 @@ public sealed class InMemoryTrackingService : ITrackingService
     ];
 
     private readonly ConcurrentDictionary<Guid, TrackedPackage> packages = new();
+    private readonly ITrackingOrchestratorService trackingOrchestrator;
+
+    public InMemoryTrackingService(ITrackingOrchestratorService trackingOrchestrator)
+    {
+        this.trackingOrchestrator = trackingOrchestrator;
+    }
 
     public TrackedPackageDetailsDto Create(CreateTrackingRequestDto request)
     {
         var normalizedTrackingNumber = NormalizeTrackingNumber(request.TrackingNumber);
-        var package = BuildMockPackage(request.Carrier, normalizedTrackingNumber, 2);
+        var snapshot = trackingOrchestrator.GetSnapshot(request.Carrier, normalizedTrackingNumber, 2);
+        var package = BuildPackage(snapshot);
 
         packages[package.Id] = package;
 
@@ -49,7 +55,8 @@ public sealed class InMemoryTrackingService : ITrackingService
 
         var currentStage = GetStageIndex(existing.Status);
         var nextStage = Math.Min(currentStage + 1, StatusSequence.Length - 1);
-        var refreshed = BuildMockPackage(existing.Carrier, existing.TrackingNumber, nextStage, existing.Id);
+        var snapshot = trackingOrchestrator.GetSnapshot(existing.Carrier, existing.TrackingNumber, nextStage);
+        var refreshed = BuildPackage(snapshot, existing.Id);
 
         packages[id] = refreshed;
 
@@ -58,76 +65,26 @@ public sealed class InMemoryTrackingService : ITrackingService
 
     public bool Delete(Guid id) => packages.TryRemove(id, out _);
 
-    private static TrackedPackage BuildMockPackage(Carrier carrier, string trackingNumber, int stage, Guid? id = null)
+    private static TrackedPackage BuildPackage(CarrierTrackingSnapshotDto snapshot, Guid? id = null)
     {
-        var clampedStage = Math.Clamp(stage, 0, StatusSequence.Length - 1);
-        var now = DateTimeOffset.UtcNow;
-        var events = BuildEvents(carrier, clampedStage, now);
-
         return new TrackedPackage
         {
             Id = id ?? Guid.NewGuid(),
-            Carrier = carrier,
-            TrackingNumber = trackingNumber,
-            Status = StatusSequence[clampedStage],
-            EstimatedDelivery = clampedStage >= StatusSequence.Length - 1 ? now : now.AddDays(1),
-            LastUpdated = now,
-            Events = events
+            Carrier = snapshot.Carrier,
+            TrackingNumber = snapshot.TrackingNumber,
+            Status = snapshot.Status,
+            EstimatedDelivery = snapshot.EstimatedDelivery,
+            LastUpdated = snapshot.RetrievedAt,
+            Events = snapshot.Events
+                .Select(trackingEvent => new TrackingEvent
+                {
+                    Timestamp = trackingEvent.Timestamp,
+                    Location = trackingEvent.Location,
+                    Description = trackingEvent.Description,
+                    StatusCode = trackingEvent.StatusCode
+                })
+                .ToList()
         };
-    }
-
-    private static List<TrackingEvent> BuildEvents(Carrier carrier, int stage, DateTimeOffset now)
-    {
-        var carrierHub = carrier switch
-        {
-            Carrier.Usps => "USPS Regional Facility",
-            Carrier.Ups => "UPS Distribution Center",
-            _ => "Carrier Facility"
-        };
-
-        var allEvents = new List<TrackingEvent>
-        {
-            new()
-            {
-                Timestamp = now.AddHours(-36),
-                Location = "Shipping Label Created",
-                Description = "Shipment information received.",
-                StatusCode = "LABEL_CREATED"
-            },
-            new()
-            {
-                Timestamp = now.AddHours(-24),
-                Location = "Origin Facility",
-                Description = "Package accepted by carrier.",
-                StatusCode = "ACCEPTED"
-            },
-            new()
-            {
-                Timestamp = now.AddHours(-12),
-                Location = carrierHub,
-                Description = "Package is moving through the carrier network.",
-                StatusCode = "IN_TRANSIT"
-            },
-            new()
-            {
-                Timestamp = now.AddHours(-2),
-                Location = "Destination City",
-                Description = "Package is out for delivery.",
-                StatusCode = "OUT_FOR_DELIVERY"
-            },
-            new()
-            {
-                Timestamp = now.AddMinutes(-20),
-                Location = "Delivery Address",
-                Description = "Package delivered.",
-                StatusCode = "DELIVERED"
-            }
-        };
-
-        return allEvents
-            .Take(stage + 1)
-            .OrderByDescending(trackingEvent => trackingEvent.Timestamp)
-            .ToList();
     }
 
     private static string NormalizeTrackingNumber(string value) =>

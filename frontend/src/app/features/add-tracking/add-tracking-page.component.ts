@@ -40,7 +40,7 @@ export class AddTrackingPageComponent {
 
     this.trackingApi.createTracking({
       carrier: value.carrier,
-      trackingNumber: value.trackingNumber
+      trackingNumber: value.trackingNumber.trim()
     }).subscribe({
       next: trackedPackage => {
         void this.router.navigate(['/tracking', trackedPackage.id]);

@@ -73,11 +73,30 @@
   align-items: center;
   padding: 0.45rem 0.8rem;
   border-radius: 999px;
-  background: #ccfbf1;
-  color: #115e59;
   font-size: 0.85rem;
   font-weight: 700;
   white-space: nowrap;
+}
+
+.status-label-created,
+.status-accepted {
+  background: #e2e8f0;
+  color: #334155;
+}
+
+.status-in-transit {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.status-out-for-delivery {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+.status-delivered {
+  background: #ccfbf1;
+  color: #115e59;
 }
 
 .meta {
@@ -127,6 +146,16 @@
   margin-top: 0;
 }
 
+.loader {
+  width: 42px;
+  height: 42px;
+  margin: 0 auto 0.8rem;
+  border-radius: 50%;
+  border: 4px solid #dbeafe;
+  border-top-color: #0f766e;
+  animation: spin 0.8s linear infinite;
+}
+
 .primary-link,
 .secondary-link,
 button {
@@ -170,5 +199,11 @@ button:disabled {
 
   .actions {
     flex-direction: column;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
   }
 }

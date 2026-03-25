@@ -73,6 +73,10 @@ export class TrackingDetailsPageComponent implements OnInit {
     });
   }
 
+  protected statusClass(status: string): string {
+    return `status-${status.toLowerCase().replaceAll(' ', '-')}`;
+  }
+
   private loadPackage(id: string): void {
     this.isLoading.set(true);
     this.errorMessage.set('');
